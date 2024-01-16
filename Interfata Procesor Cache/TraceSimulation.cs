@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -9,27 +10,40 @@ namespace Interfata_Procesor_Cache
 {
     internal class TraceSimulation
     {
-        readonly string _name;
-        readonly List<string> _traces;
-        Regex splitRegex = new Regex(@"[BLS]\s*\d*\s*\d*");
+        private FetchProvider fetchProvider;
+        private string name;
+        private InstructionBuffer instructionBuffer;
 
-        public TraceSimulation(string name)
+        public TraceSimulation(string name, Settings settings)
         {
-            _name = name;
+            this.name = name;
 
-            using (var reader = new StreamReader($"./Traces/{_name}.trc"))
-            {
-                string unformattedData = reader.ReadToEnd();
-                _traces = [.. splitRegex.Matches(unformattedData).Select(x=>x.Value)];
-            }
+            var instructionProvider = new InstructionProvider($"./Traces/{name}.trc");
+            fetchProvider = new FetchProvider(settings.fetchRate, instructionProvider);
+            instructionBuffer = new InstructionBuffer(settings);
         }
 
-        public async void startSimulation(Action<string, int> simulationUpdateCallback)
+        public Task startSimulationAsync(Action<string, int> simulationUpdateCallback)
         {
-            for(int i = 0; i < _traces.Count; i++)
+            return Task.Run(()=>startSimulation(simulationUpdateCallback));
+        }
+
+        private void startSimulation(Action<string, int> simulationUpdateCallback)
+        {
+            do
             {
-                simulationUpdateCallback(_name, i);
-            }
+                do
+                {
+                    instructionBuffer.addInstructions(fetchProvider.fetchInstructions());
+
+                    executeInstructions(instructionBuffer.getInstruction());
+                } while (instructionBuffer.canAdd);
+            } while (!fetchProvider.isDone);
+        }
+
+        private void executeInstructions(List<Instruction> instructions)
+        {
+
         }
     }
 }

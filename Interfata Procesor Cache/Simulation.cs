@@ -21,7 +21,7 @@ namespace Interfata_Procesor_Cache
 
             foreach (var file in _files)
             {
-                traceSimulations.Add(new TraceSimulation(file));
+                traceSimulations.Add(new TraceSimulation(file, settings));
             }
 
             this.simulatuinUpdateCallback = simulatuinUpdateCallback;
@@ -31,7 +31,7 @@ namespace Interfata_Procesor_Cache
         {
             foreach (var sim in traceSimulations)
             {
-                sim.startSimulation(simulatuinUpdateCallback);
+                sim.startSimulationAsync(simulatuinUpdateCallback);
             }
         }
     }

@@ -43,7 +43,10 @@ namespace Interfata_Procesor_Cache
 
         private void simulationUpdateCallback(string traceName, int value)
         {
-
+            if(value == 100)
+            {
+                MessageBox.Show("done: " + traceName);
+            }
         }
     }
 }
