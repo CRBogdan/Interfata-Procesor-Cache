@@ -32,12 +32,14 @@ namespace Interfata_Procesor_Cache
                 .setFetchRate(4)
                 .setInstructionBufferSize(4)
                 .setIssueRateMaxim(4)
+
                 .setDataCacheBlockSize(4)
+                .setDataCacheSize(1024)
 
-                .setInstructionBufferSize(4)
-                .setInstructionCacheSize(4)
+                .setInstructionCacheBlockSize(4)
+                .setInstructionCacheSize(64)
 
-                .setHitLatency(2)
+                .setHitLatency(1)
                 .setMissLatency(10)
 
                 .validate();
@@ -51,7 +53,7 @@ namespace Interfata_Procesor_Cache
                 task.ContinueWith(async (x) => {
                     var result = await x;
 
-                    this.Invoke(setSimulationResult, result.GetSimulationResult);
+                    this.Invoke(()=>setSimulationResult(result.GetSimulationResult()));
                 });
             }
         }

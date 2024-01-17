@@ -14,11 +14,11 @@ namespace Interfata_Procesor_Cache
         public int branchInstructions;
         public int totalInstructions;
         public int ticks;
-        public int issueRate;
+        public double issueRate;
         public int instructionCacheMiss;
-        public int instructionCacheMissRate;
+        public double instructionCacheMissRate;
         public int dataCacheMiss;
-        public int dataCacheMissRate;
+        public double dataCacheMissRate;
         public int dataCacheAccesses;
     }
 }

@@ -68,9 +68,10 @@ namespace Interfata_Procesor_Cache
 
         private void executeInstructions(List<Instruction> instructions)
         {
+            mainClock = mainClock + instructionCache.check(instructions[0]);
+
             foreach(Instruction instruction in instructions)
             {
-                mainClock = mainClock + instructionCache.check(instruction);
 
                 if (instruction.instrictionCode == "A")
                     oneCycleInstructions++;
@@ -100,6 +101,12 @@ namespace Interfata_Procesor_Cache
                 branchInstructions = this.branchInstructions,
                 totalInstructions = this.oneCycleInstructions + this.loadInstructions + this.storeInstructions + this.branchInstructions,
                 ticks = this.mainClock,
+                issueRate = (double)(this.oneCycleInstructions + this.loadInstructions + this.storeInstructions + this.branchInstructions)/(double)mainClock,
+                instructionCacheMiss = instructionCache.instructionMisses,
+                instructionCacheMissRate = (double)instructionCache.instructionMisses / (double)(instructionCache.instructionMisses + instructionCache.instructionHits),
+                dataCacheMiss = dataCache.dataMisses,
+                dataCacheMissRate = (double)dataCache.dataMisses / (double)(dataCache.dataMisses + dataCache.dataHits),
+                dataCacheAccesses = dataCache.dataMisses + dataCache.dataHits
             };
         }
     }

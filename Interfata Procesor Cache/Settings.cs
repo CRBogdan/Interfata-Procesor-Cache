@@ -11,9 +11,11 @@ namespace Interfata_Procesor_Cache
         public int fetchRate;
         public int instructionBufferSize;
         public int issueRateMaxim;
-        public int dataCacheBlockSize;
         public int instructionCacheBlockSize;
         public int instructionCacheSize;
+
+        public int dataCacheBlockSize;
+        public int dataCacheSize;
 
         public int hitLatency;
         public int missLatency;
@@ -76,6 +78,12 @@ namespace Interfata_Procesor_Cache
         public Settings setDataCacheType(string  dataCacheType)
         {
             this.dataCacheType = dataCacheType;
+            return this;
+        }
+
+        public Settings setDataCacheSize(int dataCacheSize)
+        {
+            this.dataCacheSize = dataCacheSize;
             return this;
         }
     }
