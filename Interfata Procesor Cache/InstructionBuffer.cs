@@ -12,6 +12,7 @@ namespace Interfata_Procesor_Cache
 
         private Queue<Instruction> instructions;
         public bool canAdd;
+        public bool isEmpty;
 
         public InstructionBuffer(Settings settings)
         {
@@ -19,6 +20,7 @@ namespace Interfata_Procesor_Cache
 
             instructions = new Queue<Instruction>();
             canAdd = true;
+            isEmpty = false;
         }
 
         public void addInstructions(List<Instruction> instructions)
@@ -35,6 +37,8 @@ namespace Interfata_Procesor_Cache
                 canAdd = false;
             else
                 canAdd = true;
+
+            isEmpty = false;
         }
 
         public List<Instruction> getInstruction()
@@ -50,6 +54,11 @@ namespace Interfata_Procesor_Cache
                 canAdd = false;
             else
                 canAdd = true;
+
+            if (instructions.Count > 0)
+                isEmpty = false;
+            else 
+                isEmpty = true;
 
             return result;
         }

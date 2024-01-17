@@ -27,12 +27,16 @@ namespace Interfata_Procesor_Cache
             this.simulatuinUpdateCallback = simulatuinUpdateCallback;
         }
 
-        public void startSimulation()
+        public List<Task<TraceSimulation>> startSimulation()
         {
+            List<Task<TraceSimulation>> tasks = new List<Task<TraceSimulation>>();
+
             foreach (var sim in traceSimulations)
             {
-                sim.startSimulationAsync(simulatuinUpdateCallback);
+                tasks.Add(sim.startSimulationAsync(simulatuinUpdateCallback));
             }
+
+            return tasks;
         }
     }
 }

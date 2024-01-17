@@ -33,12 +33,27 @@ namespace Interfata_Procesor_Cache
                 .setInstructionBufferSize(4)
                 .setIssueRateMaxim(4)
                 .setDataCacheBlockSize(4)
+
                 .setInstructionBufferSize(4)
+                .setInstructionCacheSize(4)
+
+                .setHitLatency(2)
+                .setMissLatency(10)
+
                 .validate();
 
             Simulation simulation = new Simulation(settings, files, simulationUpdateCallback);
 
-            simulation.startSimulation();
+            var tasks = simulation.startSimulation();
+
+            foreach (var task in tasks)
+            {
+                task.ContinueWith(async (x) => {
+                    var result = await x;
+
+                    this.Invoke(setSimulationResult, result.GetSimulationResult);
+                });
+            }
         }
 
         private void simulationUpdateCallback(string traceName, int value)
@@ -47,6 +62,11 @@ namespace Interfata_Procesor_Cache
             {
                 MessageBox.Show("done: " + traceName);
             }
+        }
+
+        private void setSimulationResult(SimulationResult simulationResult)
+        {
+            return;
         }
     }
 }

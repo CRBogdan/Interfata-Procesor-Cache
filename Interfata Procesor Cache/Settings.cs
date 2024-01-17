@@ -13,6 +13,12 @@ namespace Interfata_Procesor_Cache
         public int issueRateMaxim;
         public int dataCacheBlockSize;
         public int instructionCacheBlockSize;
+        public int instructionCacheSize;
+
+        public int hitLatency;
+        public int missLatency;
+
+        public string dataCacheType;
 
         public Settings validate() 
         {
@@ -46,6 +52,30 @@ namespace Interfata_Procesor_Cache
         public Settings setInstructionCacheBlockSize(int instructionCacheBlockSize)
         {
             this.instructionCacheBlockSize = instructionCacheBlockSize;
+            return this;
+        }
+
+        public Settings setInstructionCacheSize(int instructionCacheSize)
+        {
+            this.instructionCacheSize = instructionCacheSize;
+            return this;
+        }
+
+        public Settings setHitLatency(int hitLatency)
+        {
+            this.hitLatency = hitLatency;
+            return this;
+        }
+
+        public Settings setMissLatency(int missLatency)
+        {
+            this.missLatency = missLatency;
+            return this;
+        }
+
+        public Settings setDataCacheType(string  dataCacheType)
+        {
+            this.dataCacheType = dataCacheType;
             return this;
         }
     }
