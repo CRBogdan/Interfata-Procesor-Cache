@@ -39,6 +39,12 @@ namespace Interfata_Procesor_Cache
                 {
                     currentInstruction = instructionProvider.getNextInstruction();
                     wasLastInstructionProcessed = false;
+
+                    if (currentInstruction == null)
+                    {
+                        isDone = true;
+                        break;
+                    }
                 }
 
                 if (result[i].currentAddress != currentInstruction.currentAddress)
@@ -63,12 +69,6 @@ namespace Interfata_Procesor_Cache
                     wasLastInstructionProcessed= true;
                 }
 
-                if (currentInstruction == null)
-                {
-                    isDone = true;
-                    break;
-                }
-
                 programCounter++;
             }
 
@@ -78,6 +78,9 @@ namespace Interfata_Procesor_Cache
                 wasLastInstructionProcessed = false;
                 PCBranch = -1;
             }
+
+            if (result[3].instrictionCode == "B")
+                wasLastInstructionProcessed = true;
 
             return result;
         }
